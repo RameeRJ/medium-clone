@@ -19,7 +19,7 @@ class PostController extends Controller
             return Post::latest()->paginate(5);
         });
 
-        return view('dashboard', ['posts' => $posts]);
+        return view('post.index', ['posts' => $posts]);
     }
 
     /**
