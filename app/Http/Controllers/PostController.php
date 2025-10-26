@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,14 +13,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
 
         $page = request('page', 1);
         $posts = Cache::remember("posts.page.{$page}", now()->addMinutes(10), function () {
             return Post::latest()->paginate(5);
         });
 
-        return view('dashboard', ['categories' => $categories, 'posts' => $posts]);
+        return view('dashboard', ['posts' => $posts]);
     }
 
     /**
