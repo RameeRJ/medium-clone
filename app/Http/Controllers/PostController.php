@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -27,15 +29,28 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::get();
+
+        return view('post.create', ['categories' => $categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('posts', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        Post::Create($data);
+
+        Cache::flush();
+
+        return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }
 
     /**
