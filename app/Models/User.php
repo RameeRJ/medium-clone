@@ -57,6 +57,49 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
+    public function followingCount()
+    {
+        $count = $this->following()->count();
+
+        if ($count >= 1000000) {
+            return round($count / 1000000, 1).'M';
+        } elseif ($count >= 1000) {
+            return round($count / 1000, 1).'K';
+        }
+
+        return (string) $count;
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    public function followersCount()
+    {
+        $count = $this->followers()->count();
+
+        if ($count >= 1000000) {
+            return round($count / 1000000, 1).'M';
+        } elseif ($count >= 1000) {
+            return round($count / 1000, 1).'K';
+        }
+
+        return (string) $count;
+    }
+
+    public function isFollowedBy(User $user): bool
+    {
+        return $this->followers()
+            ->where('follower_id', $user->id)
+            ->exists();
+    }
+
     public function getRouteKeyName(): string
     {
         return 'username';
@@ -64,6 +107,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function imageUrl(): string
     {
-        return $this->image ? Storage::url($this->image) : 'https://avatar.iran.liara.run/public';
+        return $this->image
+            ? Storage::url($this->image)
+            : 'https://api.dicebear.com/8.x/micah/svg?seed='.urlencode($this->id);
     }
 }

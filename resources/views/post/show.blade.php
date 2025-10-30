@@ -5,13 +5,17 @@
                 <h1 class="text-3xl mb-4">{{ $post->title }}</h1>
                 {{-- User avatar and details section --}}
                 <div class="flex gap-4">
-                    <x-avatar :user="$user"/>
+                    <x-avatar :user="$user" />
                     <div>
-                        <div class="flex gap-2 text-lg">
+                        <x-follow-container :user="$user" class="flex gap-2 text-lg">
                             <a href="{{ route('profile.show', $user) }}" class= "hover:underline ">{{ $user->name }}</a>
-                            &middot;
-                            <a href="#" class="text-green-500">Follow</a>
-                        </div>
+                            @if (auth()->user() && auth()->user()->id !== $user->id)
+                                &middot;
+                                <a href="#" @click="follow()" class="text-green-500"><span x-text="following ? 'Unfollow' : 'Follow'"
+                                        :class="following ? 'text-red-600 hover:text-red-600' :
+                                            'text-green-600 hover:text-green-800'"></span></a>
+                            @endif
+                        </x-follow-container>
                         <div class="flex gap-2 text-gray-500 text-sm">
                             {{ $post->readTime() }} min read
                             &middot;

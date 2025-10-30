@@ -22,7 +22,7 @@
                 </a>
             </div>
             <a href="{{ route('post.show', ['user' => $post->user, 'post' => $post]) }}">
-                <img class="w-48 h-full max-h-[13rem] object-cover rounded-r-lg" src="{{ Storage::url($post->image) }}"
+                <img class="w-48 h-full max-h-[13rem] object-cover rounded-r-lg" src="{{ $post->imageUrl() }}"
                     alt="">
 
             </a>

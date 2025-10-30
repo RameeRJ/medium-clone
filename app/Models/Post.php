@@ -40,7 +40,21 @@ class Post extends Model
 
     public function imageUrl(): string
     {
-        return $this->image = Storage::url($this->image);
+        // 1. Check if the image property is already a full URL
+        //    (e.g., from picsum, dicebear, or robohash)
+        if (Str::startsWith($this->image, 'http')) {
+            return $this->image;
+        }
+
+        // 2. If the image is empty or null, return a default avatar
+        if (empty($this->image)) {
+            // You can use any default you want here
+            return 'https://api.dicebear.com/8.x/adventurer/svg?seed='.$this->id;
+        }
+
+        // 3. If it's not a full URL and not empty,
+        //    it must be a local file. Get the URL from Storage.
+        return Storage::url($this->image);
     }
 
     public function readTime($wordsPerMinute = 100): int
@@ -50,8 +64,6 @@ class Post extends Model
 
         return max(1, $minutes);
     }
-
-
 
     // Using booted method to auto-set slug and user_id
     protected static function booted()

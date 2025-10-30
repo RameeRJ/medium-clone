@@ -24,13 +24,36 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $name = fake()->name();
+        $roles = [
+            'Freelancer',
+            'Web Developer',
+            'Graphic Designer',
+            'UI/UX Designer',
+            'Content Creator',
+            'Photographer',
+            'Cyber Security Engineer',
+            'Data Analyst',
+            'AI Enthusiast',
+            'Digital Marketer',
+            'Writer',
+            'Filmmaker',
+            'Software Engineer',
+            'App Developer',
+            'Blockchain Developer',
+            'Musician',
+            'Entrepreneur',
+            'Researcher',
+        ];
+
+        $randomRoles = collect($roles)->random(rand(2, 4))->implode(' | ');
 
         return [
             'name' => $name,
-            'username' => Str::slug($name),
+            'username' => Str::slug($name).fake()->unique()->numberBetween(100, 9999),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'bio' => $randomRoles,
+            'password' => static::$password ??= Hash::make('1111'),
             'remember_token' => Str::random(10),
         ];
     }
