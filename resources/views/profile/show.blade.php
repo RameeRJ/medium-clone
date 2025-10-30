@@ -50,6 +50,7 @@
 
                                     </span>
                                     followers</a>
+
                                 <p class="text-gray-500">
                                     {{ $user->bio ?? 'No Bio' }}
                                 </p>
@@ -72,34 +73,32 @@
                                         </button>
                                     </div>
                                 @endif
-                            </div>
-                        </x-follow-container>
+                                @if ($user->followingCount() > 0)
+                                    <div>
+                                        <h4 class="mt-6 font-semibold mb-4">Following</h4>
 
-                        @if ($user->followingCount() > 0)
-                            <div>
-                                <h4 class="mt-6 font-semibold mb-4">Following</h4>
-
-                                @foreach ($following as $user)
-                                    <div class="flex items-center gap-4">
-                                        <x-avatar :user="$user" size="w-8 h-8" />
-                                        <a href="{{ route('profile.show', $user) }}"
-                                            class="text-gray-500 hover:text-black hover:underline">{{ $user->name }}</a>
-                                    </div>
-                                @endforeach
+                                        @foreach ($following as $user)
+                                            <div class="flex items-center gap-4">
+                                                <x-avatar :user="$user" size="w-8 h-8" />
+                                                <a href="{{ route('profile.show', $user) }}"
+                                                    class="text-gray-500 hover:text-black hover:underline">{{ $user->name }}</a>
+                                            </div>
+                                        @endforeach
 
 
-                                @if ($user->followingCount() > 10)
-                                    <div class="mt-4">
-                                        <a href="#" class="text-gray-500 hover:underline text-[14px] px-2">
-                                            See all ({{ $user->followingCount() - 10 }} more)
-                                        </a>
+                                        @if ($user->followingCount() > 10)
+                                            <div class="mt-4">
+                                                <a href="#"
+                                                    class="text-gray-500 hover:underline text-[14px] px-2">
+                                                    See all ({{ $user->followingCount() - 10 }} more)
+                                                </a>
+                                            </div>
+                                        @endif
+
+
                                     </div>
                                 @endif
-
-
-                            </div>
-                        @endif
-
+                        </x-follow-container>
                     </div>
                 </div>
             </div>
