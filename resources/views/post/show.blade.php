@@ -5,11 +5,10 @@
                 <h1 class="text-3xl mb-4">{{ $post->title }}</h1>
                 {{-- User avatar and details section --}}
                 <div class="flex gap-4">
-                    <img src="{{ $user->imageUrl() }}" alt="{{ $user->name }}"
-                        class="w-16 h-16 rounded-full object-cover">
+                    <x-avatar :user="$user"/>
                     <div>
                         <div class="flex gap-2 text-lg">
-                            <h3>{{ $user->name }}</h3>
+                            <a href="{{ route('profile.show', $user) }}" class= "hover:underline ">{{ $user->name }}</a>
                             &middot;
                             <a href="#" class="text-green-500">Follow</a>
                         </div>

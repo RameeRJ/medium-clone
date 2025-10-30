@@ -10,14 +10,9 @@
 
                 </div>
             </div>
-            <div class="mt-8 text-gray-900">
-                @forelse ($posts as $post)
-                    <x-post-item :post="$post"> </x-post-item>
-                @empty
-                    <div class="text-center text-gray-300 py-16">No Posts Found</div>
-                @endforelse
-            </div>
-            {{ $posts->onEachSide(1)->links('vendor.pagination.tailwind') }}
+            <x-post-item :posts="$posts" />
+
+            
 
         </div>
     </div>
