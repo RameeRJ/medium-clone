@@ -100,6 +100,13 @@ class User extends Authenticatable implements MustVerifyEmail
             ->exists();
     }
 
+    public function hasClapped(Post $post): bool
+    {
+        return Clap::where('user_id', $this->id)
+            ->where('post_id', $post->id)
+            ->exists();
+    }
+
     public function getRouteKeyName(): string
     {
         return 'username';

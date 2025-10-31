@@ -1,5 +1,5 @@
  @props(['user'])
- 
+
  <div {{ $attributes }} x-data="{
      following: {{ $user->isFollowedBy(auth()->user()) ? 'true' : 'false' }},
      followersCount: {{ $user->followersCount() }},
@@ -15,5 +15,5 @@
              })
      }
  }" class="border-l w-[320px] px-8">
- {{ $slot }}
+     {{ $slot }}
  </div>

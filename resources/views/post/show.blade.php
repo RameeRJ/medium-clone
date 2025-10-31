@@ -11,7 +11,8 @@
                             <a href="{{ route('profile.show', $user) }}" class= "hover:underline ">{{ $user->name }}</a>
                             @if (auth()->user() && auth()->user()->id !== $user->id)
                                 &middot;
-                                <a href="#" @click="follow()" class="text-green-500"><span x-text="following ? 'Unfollow' : 'Follow'"
+                                <a href="#" @click="follow()" class="text-green-500"><span
+                                        x-text="following ? 'Unfollow' : 'Follow'"
                                         :class="following ? 'text-red-600 hover:text-red-600' :
                                             'text-green-600 hover:text-green-800'"></span></a>
                             @endif
@@ -26,7 +27,7 @@
                 </div>
 
                 {{-- Clap section --}}
-                <x-clap-button />
+                <x-clap-button :post="$post" />
 
                 {{-- Content section --}}
                 <div>
@@ -46,10 +47,15 @@
                     </span>
                 </div>
 
-                <x-clap-button />
+                {{-- <x-clap-button :post="$post" /> --}}
 
             </div>
 
         </div>
     </div>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('claps', {});
+        });
+    </script>
 </x-app-layout>
