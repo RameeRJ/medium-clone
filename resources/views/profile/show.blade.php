@@ -78,7 +78,7 @@
                                         <h4 class="mt-6 font-semibold mb-4">Following</h4>
 
                                         @foreach ($following as $user)
-                                            <div class="flex items-center gap-4">
+                                            <div class="flex items-center gap-4 mb-1">
                                                 <x-avatar :user="$user" size="w-8 h-8" />
                                                 <a href="{{ route('profile.show', $user) }}"
                                                     class="text-gray-500 hover:text-black hover:underline">{{ $user->name }}</a>
