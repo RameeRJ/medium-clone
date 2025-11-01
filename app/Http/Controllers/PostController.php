@@ -16,13 +16,20 @@ class PostController extends Controller
      */
     public function index()
     {
-
         $page = request('page', 1);
-        $posts = Cache::remember("posts.page.{$page}", now()->addMinutes(10), function () {
-            return Post::latest()->paginate(5);
+        $user = auth()->user();
+
+        $posts = Cache::remember('posts.'.($user->id ?? 'guest').".page.{$page}", now()->addMinutes(10), function () use ($user) {
+            return Post::when($user, function ($query) use ($user) {
+                // If logged in: filter posts from followed users
+                $followingIds = $user->following()->pluck('users.id');
+                $query->whereIn('user_id', $followingIds);
+            })
+                ->latest()
+                ->paginate(5);
         });
 
-        return view('post.index', ['posts' => $posts]);
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -86,16 +93,23 @@ class PostController extends Controller
         //
     }
 
+    public function categories()
+    {
+        $categories = Category::all();
+        $posts = Post::latest()->paginate(5);
+
+        return view('post.category', compact('categories', 'posts'));
+    }
+
     public function category(Category $category)
     {
+        $categories = Category::where('id')->get();
         $page = request('page', 1);
 
         $posts = Cache::remember("category.{$category->id}.page.{$page}", now()->addMinutes(10), function () use ($category) {
-            return $category->posts()
-                ->latest()
-                ->paginate(5);
+            return $category->posts()->latest()->paginate(5);
         });
 
-        return view('post.index', ['posts' => $posts]);
+        return view('post.category', compact('categories', 'posts', 'category'));
     }
 }

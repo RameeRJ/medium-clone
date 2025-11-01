@@ -1,4 +1,4 @@
-<div class="mt-8 text-gray-900">
+<div class="mt-5 text-gray-900">
     @forelse ($posts as $post)
         <div class="flex bg-white border border-gray-200 rounded-lg shadow-sm mb-8">
 

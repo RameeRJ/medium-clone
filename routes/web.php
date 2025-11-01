@@ -16,7 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
     Route::post('/follow/{user:id}', [FollowController::class, 'followUnfollow'])->name('follow');
     Route::post('/clap/{post:id}', [ClapController::class, 'clap'])->name('clap');
-    
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [PostController::class, 'index'])->name('dashboard');
 Route::get('/@{user}/{post}', [PostController::class, 'show'])->name('post.show');
 Route::get('/@{user}', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/category/{category}', [PostController::class, 'category'])->name('post.category');
+Route::get('/categories', [PostController::class, 'categories'])->name('post.categories');
+Route::get('/categories/{category:name}', [PostController::class, 'category'])->name('post.category');
 
 require __DIR__.'/auth.php';

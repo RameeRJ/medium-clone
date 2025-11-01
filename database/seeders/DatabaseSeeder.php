@@ -19,35 +19,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Technology', 'Health', 'Travel', 'Education', 'Lifestyle'];
+        $categories = ['Movie', 'Games', 'Sports', 'Politics', 'Food'];
 
         foreach ($categories as $categoryName) {
             Category::create(['name' => $categoryName]);
         }
 
-        User::factory()->create([
-            'name' => 'test',
-            'email' => 'test@gmail.com',
-            'username' => 'test',
-            'bio' => 'Administrator | Developer | Photographer',
-            'password' => Hash::make('1111'),
-        ]);
-        User::factory()->create([
-            'name' => 'mary',
-            'email' => 'mary@gmail.com',
-            'username' => 'mary',
-            'bio' => 'Administrator | Freelancer | Blogger',
-            'password' => Hash::make('1111'),
-        ]);
-        User::factory()->create([
-            'name' => 'zura',
-            'email' => 'zura@gmail.com',
-            'username' => 'zura',
-            'bio' => 'Writer s | Filmmaker | Blogger',
-            'password' => Hash::make('1111'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'test',
+        //     'email' => 'test@gmail.com',
+        //     'username' => 'test',
+        //     'bio' => 'Administrator | Developer | Photographer',
+        //     'password' => Hash::make('1111'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'mary',
+        //     'email' => 'mary@gmail.com',
+        //     'username' => 'mary',
+        //     'bio' => 'Administrator | Freelancer | Blogger',
+        //     'password' => Hash::make('1111'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'zura',
+        //     'email' => 'zura@gmail.com',
+        //     'username' => 'zura',
+        //     'bio' => 'Writer s | Filmmaker | Blogger',
+        //     'password' => Hash::make('1111'),
+        // ]);
 
-        Post::factory(50)->create();
+        // Post::factory(50)->create();
 
         // $users = User::factory(10)->create();
 
