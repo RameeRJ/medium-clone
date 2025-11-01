@@ -37,6 +37,8 @@ class Post extends Model
         return $this->hasMany(Clap::class);
     }
 
+    
+
     // Accessors
     public function getRouteKeyName(): string
     {

@@ -85,4 +85,17 @@ class PostController extends Controller
     {
         //
     }
+
+    public function category(Category $category)
+    {
+        $page = request('page', 1);
+
+        $posts = Cache::remember("category.{$category->id}.page.{$page}", now()->addMinutes(10), function () use ($category) {
+            return $category->posts()
+                ->latest()
+                ->paginate(5);
+        });
+
+        return view('post.index', ['posts' => $posts]);
+    }
 }
