@@ -6,6 +6,10 @@
         clapCount: {{ $post->claps()->count() }},
         isAnimating: false,
         clap() {
+        @if (!auth()->user()->hasVerifiedEmail())
+                    window.location.href = '{{ route('verification.notice') }}';
+                    return;
+                @endif
             this.isAnimating = true;
             axios.post('/clap/{{ $post->id }}')
                 .then(res => {
