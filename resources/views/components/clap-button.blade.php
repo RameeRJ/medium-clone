@@ -1,27 +1,35 @@
 @props(['post'])
 
+<!-- Add id="comment-section" to your comment-box component in the post view -->
 <div>
     <div x-data="{
         hasClapped: {{ auth()->user()->hasClapped($post) ? 'true' : 'false' }},
         clapCount: {{ $post->claps()->count() }},
+        commentCount: {{ $post->comments()->count() ?? 0 }},
         isAnimating: false,
         clap() {
-        @if (!auth()->user()->hasVerifiedEmail())
-                    window.location.href = '{{ route('verification.notice') }}';
-                    return;
-                @endif
+            @if (!auth()->user()->hasVerifiedEmail()) 
+                window.location.href = '{{ route('verification.notice') }}';
+                return; 
+            @endif
             this.isAnimating = true;
             axios.post('/clap/{{ $post->id }}')
                 .then(res => {
                     this.hasClapped = !this.hasClapped
                     this.clapCount = res.data.claps
-                    setTimeout(() => this.isAnimating = false, 500) // stop animation after 0.5s
+                    setTimeout(() => this.isAnimating = false, 500)
                 })
                 .catch(err => console.error(err))
+        },
+        scrollToComments() {
+            const commentSection = document.querySelector('#comment-section');
+            if (commentSection) {
+                commentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
-    }" class="mt-8 border-b border-t p-2 px-6 flex items-center gap-2">
+    }" class="mt-8 border-b border-t p-2 px-6 flex items-center gap-3">
 
-        <!-- Button with animation -->
+        <!-- Clap Button with animation -->
         <button class="relative flex items-center gap-2 text-gray-500 hover:text-gray-700 cursor-pointer" @click="clap()">
             <!-- pulse circle animation -->
             <div x-show="isAnimating" x-transition.scale.origin.center
@@ -49,6 +57,17 @@
             <!-- Count with bounce effect -->
             <span x-text="clapCount" class="text-sm font-semibold transition-all duration-300"
                 :class="{ 'scale-125 text-gray-500': isAnimating }">
+            </span>
+        </button>
+
+        <!-- Comment Button -->
+        <button @click="scrollToComments()" class="relative flex items-center gap-2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+            </svg>
+            <span x-text="commentCount" class="text-sm font-semibold">
             </span>
         </button>
 

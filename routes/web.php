@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClapController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +17,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
     Route::post('/follow/{user:id}', [FollowController::class, 'followUnfollow'])->name('follow');
     Route::post('/clap/{post:id}', [ClapController::class, 'clap'])->name('clap');
+    Route::post('/posts/{post:id}/comments', [CommentController::class, 'store']);
+    // Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
 
 });
 

@@ -32,12 +32,17 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function claps(){
+    public function claps()
+    {
 
         return $this->hasMany(Clap::class);
     }
 
-    
+    public function comments()
+    {
+
+        return $this->hasMany(Comment::class);
+    }
 
     // Accessors
     public function getRouteKeyName(): string

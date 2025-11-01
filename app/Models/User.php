@@ -50,6 +50,8 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    protected $appends = ['avatar_url']; // Make it always available in JSON
+
     // Relations
 
     public function posts()
@@ -110,6 +112,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteKeyName(): string
     {
         return 'username';
+    }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        return $this->imageUrl();
     }
 
     public function imageUrl(): string

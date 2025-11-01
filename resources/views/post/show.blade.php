@@ -53,14 +53,15 @@
                 </div>
 
                 {{-- <x-clap-button :post="$post" /> --}}
+                @auth
+                    <div id="comment-section">
+                        <x-comment-box :post="$post" />
+                    </div>
+                @endauth
 
             </div>
 
         </div>
     </div>
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('claps', {});
-        });
-    </script>
+
 </x-app-layout>
