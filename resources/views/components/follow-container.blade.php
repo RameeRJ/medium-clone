@@ -1,19 +1,22 @@
- @props(['user'])
+@props(['user'])
 
- <div {{ $attributes }} x-data="{
-     following: {{ $user->isFollowedBy(auth()->user()) ? 'true' : 'false' }},
-     followersCount: {{ $user->followersCount() }},
-     follow() {
-         this.following = !this.following
-         axios.post('/follow/{{ $user->id }}')
-             .then(res => {
- 
-                 this.followersCount = res.data.followers
-             })
-             .catch(err => {
- 
-             })
-     }
- }" class="border-l w-[320px] px-8">
-     {{ $slot }}
- </div>
+<div {{ $attributes }} x-data="{
+    following: {{ auth()->check() && $user->isFollowedBy(auth()->user()) ? 'true' : 'false' }},
+    followersCount: {{ $user->followersCount() }},
+    follow() {
+        @auth
+            this.following = !this.following
+            axios.post('/follow/{{ $user->id }}')
+                .then(res => {
+                    this.followersCount = res.data.followers
+                })
+                .catch(err => {
+                    // Handle error
+                })
+        @else
+            window.location.href = '{{ route('login') }}'
+        @endauth
+    }
+}" class="border-l w-[320px] px-8">
+    {{ $slot }}
+</div>

@@ -8,13 +8,15 @@
                     <x-avatar :user="$user" />
                     <div>
                         <x-follow-container :user="$user" class="flex gap-2 text-lg">
-                            <a href="{{ route('profile.show', $user) }}" class= "hover:underline ">{{ $user->name }}</a>
-                            @if (auth()->user() && auth()->user()->id !== $user->id)
+                            <a href="{{ route('profile.show', $user) }}" class="hover:underline">{{ $user->name }}</a>
+                            @if (!auth()->check() || auth()->user()->id !== $user->id)
                                 &middot;
-                                <a href="#" @click="follow()" class="text-green-500"><span
-                                        x-text="following ? 'Unfollow' : 'Follow'"
+                                <a href="#" @click.prevent="follow()" class="text-green-500">
+                                    <span x-text="following ? 'Unfollow' : 'Follow'"
                                         :class="following ? 'text-red-600 hover:text-red-600' :
-                                            'text-green-600 hover:text-green-800'"></span></a>
+                                            'text-green-600 hover:text-green-800'">
+                                    </span>
+                                </a>
                             @endif
                         </x-follow-container>
                         <div class="flex gap-2 text-gray-500 text-sm">
@@ -22,12 +24,15 @@
                             &middot;
                             {{ $post->created_at->format('M d,Y') }}
                         </div>
+
+
                     </div>
 
                 </div>
-
                 {{-- Clap section --}}
-                <x-clap-button :post="$post" />
+                @auth
+                    <x-clap-button :post="$post" />
+                @endauth
 
                 {{-- Content section --}}
                 <div>

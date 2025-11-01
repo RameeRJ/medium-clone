@@ -54,7 +54,7 @@
                                 <p class="text-gray-500">
                                     {{ $user->bio ?? 'No Bio' }}
                                 </p>
-                                @if (auth()->user() && auth()->user()->id !== $user->id)
+                                @if (!auth()->user() || auth()->user() && auth()->user()->id !== $user->id)
                                     <div class="flex items-center gap-3 mt-4">
                                         <button @click="follow()"
                                             class="px-4 py-2 text-white rounded-full  transform hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center shadow-md hover:shadow-lg"
