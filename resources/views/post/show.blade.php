@@ -47,9 +47,9 @@
 
                 {{-- Category tag section --}}
                 <div class="mt-8">
-                    <span class="px-4 py-2 bg-gray-200 rounded-xl">
+                    <a href="{{ route('post.category',$post->category->name) }}" class="px-4 py-2 bg-gray-200 rounded-xl">
                         {{ $post->category->name }}
-                    </span>
+                    </a>
                 </div>
 
                 {{-- <x-clap-button :post="$post" /> --}}
