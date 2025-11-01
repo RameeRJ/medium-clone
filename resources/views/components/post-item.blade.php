@@ -6,7 +6,7 @@
                 <div class="flex items-center gap-2 mb-3">
                     <a href="{{ route('profile.show', $post->user) }}" class= "hover:underline flex gap-1 items-center">
                         <x-avatar :user="$post->user" size="w-6 h-6" />
-                        <span class="text-gray-700 font-sm text-sm">{{ $post->user->name }}</span>
+                        <span class="text-gray-700 font-sm text-sm">{{ $post->user->username }}</span>
                     </a>
                 </div>
                 <a href="{{ route('post.show', ['user' => $post->user, 'post' => $post]) }}">
