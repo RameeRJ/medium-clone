@@ -64,7 +64,7 @@
 
                                         </a>
                                     </div>
-                                    <span class="text-gray-500 text-sm">Medium Member Since
+                                    <span class="text-gray-500 text-sm">Writerspace Member Since
                                         {{ $user->created_at->format('M Y') }}</span>
                                 </div>
                             </div>
