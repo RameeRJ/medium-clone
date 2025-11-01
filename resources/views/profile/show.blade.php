@@ -89,12 +89,10 @@
                             </p>
                             @if (!auth()->user() || (auth()->user() && auth()->user()->id !== $user->id))
                                 <div class="flex items-center gap-3 mt-4">
-                                    <button @click="follow()"
-                                        class="px-4 py-2 text-white rounded-full  transform hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center shadow-md hover:shadow-lg"
+                                    <button @click="follow(); triggerFirework(!following)"
+                                        class="px-4 py-2 text-white rounded-full transform hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center shadow-md hover:shadow-lg relative overflow-visible"
                                         x-text="following ? 'Unfollow' : 'Follow'"
-                                        :class="following ? 'bg-red-600 hover:bg-red-600' :
-                                            'bg-green-600 hover:bg-green-800'">
-
+                                        :class="following ? 'bg-red-600 hover:bg-red-600' : 'bg-green-600 hover:bg-green-800'">
                                     </button>
                                     <a href="mailto:{{ $user->email }}"
                                         class="px-3 py-2 bg-green-600 text-white rounded-full hover:bg-green-800 transform hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center shadow-md hover:shadow-lg">
@@ -135,4 +133,70 @@
             </div>
         </div>
     </div>
+    <style>
+        @keyframes firework {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: firework 0.8s ease-out forwards;
+        }
+
+        .firework-particle.green {
+            background: radial-gradient(circle, #22c55e, #16a34a);
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .firework-particle.red {
+            background: radial-gradient(circle, #22c55e, #dc2626);
+            box-shadow: 0 0 10px #ef4444;
+        }
+    </style>
+
+    <script>
+        function triggerFirework(isFollowing) {
+            const button = event.currentTarget;
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Determine color based on action (isFollowing means we're about to follow)
+            const colorClass = isFollowing ? 'red' : 'green';
+
+            // Create 12 particles for firework effect
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = `firework-particle ${colorClass}`;
+
+                const angle = (i / 12) * Math.PI * 2;
+                const distance = 50 + Math.random() * 30;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+
+                particle.style.cssText = `
+            left: ${centerX}px;
+            top: ${centerY}px;
+            --tx: ${tx}px;
+            --ty: ${ty}px;
+        `;
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 800);
+            }
+        }
+    </script>
 </x-app-layout>
