@@ -95,7 +95,7 @@
                 <div class="text-center pt-4">
                     <button @click="showAll = true"
                         class="text-gray-600 hover:text-gray-900 font-medium text-sm border border-black p-2 rounded-full">
-                        See all <span x-text="comments.length"></span> responses
+                        See all <span x-text="comments.length-3"></span> responses
                     </button>
                 </div>
             </template>
