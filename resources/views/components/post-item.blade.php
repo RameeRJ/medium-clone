@@ -44,14 +44,47 @@
                         </a>
                     </div>
 
+
                     {{-- Right section: 3 dots --}}
-                    <div class="text-gray-500 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm6 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm6 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                        </svg>
-                    </div>
+                    @if (!auth()->check() || auth()->user()->id !== $post->user->id)
+                        @if (request()->routeIs('dashboard', 'post.categories', 'post.category'))
+                            <div x-data="{ open: false }" class="relative inline-block text-left">
+                                <!-- Trigger button -->
+                                <div @click="open = !open" class="text-gray-500 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm6 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm6 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                </div>
+
+
+                                <!-- Dropdown menu -->
+                                <div x-show="open" @click.away="open = false"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-95"
+                                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+
+
+                                    {{-- <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Follow author</a> --}}
+                                    <x-follow-container :user="$post->user">
+                                        <a href="#" @click.prevent="follow()" class="text-green-500">
+                                            <span x-text="following ? 'Unfollow' : 'Follow'"
+                                                :class="following ? 'block py-2 text-red-600 hover:text-red-600' :
+                                                    'block  py-2 text-green-600 hover:text-green-800'">
+                                            </span>
+                                        </a>
+                                    </x-follow-container>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
+
                 </div>
 
                 {{-- <a href="{{ route('post.show', ['user' => $post->user, 'post' => $post]) }}">
