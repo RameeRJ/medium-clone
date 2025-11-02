@@ -91,7 +91,7 @@
                                 <div class="flex items-center gap-3 mt-4">
                                     <button @click="follow(); triggerFirework(!following)"
                                         class="px-4 py-2 text-white rounded-full transform hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center shadow-md hover:shadow-lg relative overflow-visible"
-                                        x-text="following ? 'Unfollow' : 'Follow'"
+                                        x-text="following ? '{{ __('message.unfollow') }}' : '{{ __('message.follow') }}'"
                                         :class="following ? 'bg-red-600 hover:bg-red-600' : 'bg-green-600 hover:bg-green-800'">
                                     </button>
                                     <a href="mailto:{{ $user->email }}"

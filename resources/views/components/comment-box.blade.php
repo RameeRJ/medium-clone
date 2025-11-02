@@ -43,7 +43,7 @@
     }">
         <!-- Header -->
         <div class="pt-7 text-2xl font-bold">
-            Responses (<span x-text="comments.length"></span>)
+            {{ __('message.responses') }} (<span x-text="comments.length"></span>)
         </div>
 
         <!-- Comment Form -->
@@ -54,14 +54,14 @@
 
         <div class="mt-4 border border-gray-300 rounded-lg bg-white">
             <div class="p-3 bg-gray-50 rounded-lg">
-                <textarea x-model="commentText" @keydown.ctrl.enter="submitComment()" placeholder="What are your thoughts?"
+                <textarea x-model="commentText" @keydown.ctrl.enter="submitComment()" placeholder={{ __('message.thoughts_placeholder') }}
                     class="w-full border-none focus:ring-0 resize-none text-gray-700 placeholder-gray-500 bg-white rounded-md p-3 shadow-sm"
                     rows="3"></textarea>
                 <div class="mt-3 flex justify-end">
                     <button @click="submitComment()" :disabled="isSubmitting || !commentText.trim()" type="button"
                         class="bg-gray-800 text-white font-semibold px-4 py-1.5 rounded-lg disabled:opacity-50 shadow">
-                        <span x-show="!isSubmitting">Respond</span>
-                        <span x-show="isSubmitting">Posting...</span>
+                        <span x-show="!isSubmitting">{{ __('message.respond') }}</span>
+                        <span x-show="isSubmitting">{{ __('message.posting') }}</span>
                     </button>
                 </div>
             </div>

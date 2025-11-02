@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClapController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/follow/{user:id}', [FollowController::class, 'followUnfollow'])->name('follow');
     Route::post('/clap/{post:id}', [ClapController::class, 'clap'])->name('clap');
     Route::post('/posts/{post:id}/comments', [CommentController::class, 'store']);
-    // Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+    Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
 
 });
 

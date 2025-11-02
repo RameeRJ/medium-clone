@@ -73,9 +73,9 @@
                                     {{-- <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Follow author</a> --}}
                                     <x-follow-container :user="$post->user">
                                         <a href="#" @click.prevent="follow()" class="text-green-500">
-                                            <span x-text="following ? 'Unfollow' : 'Follow'"
-                                                :class="following ? 'block py-2 text-red-600 hover:text-red-600' :
-                                                    'block  py-2 text-green-600 hover:text-green-800'">
+                                            <span x-text="following ? '{{ __('message.unfollow') }}' : '{{ __('message.follow') }}'"
+                                                :class="following ? 'block py-2 text-red-600 hover:text-red-600 text-xs' :
+                                                    'block  py-2 text-green-600 hover:text-green-800 text-xs'">
                                             </span>
                                         </a>
                                     </x-follow-container>

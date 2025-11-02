@@ -12,7 +12,7 @@
                             @if (!auth()->check() || auth()->user()->id !== $user->id)
                                 &middot;
                                 <a href="#" @click.prevent="follow()" class="text-green-500">
-                                    <span x-text="following ? 'Unfollow' : 'Follow'"
+                                    <span x-text="following ? '{{ __('message.unfollow') }}' : '{{ __('message.follow') }}'"
                                         :class="following ? 'text-red-600 hover:text-red-600' :
                                             'text-green-600 hover:text-green-800'">
                                     </span>
@@ -48,7 +48,8 @@
                 {{-- Category tag section --}}
                 <div class="mt-8">
                     <a href="{{ route('post.category',$post->category->name) }}" class="px-4 py-2 bg-gray-200 rounded-xl">
-                        {{ $post->category->name }}
+                       {{ __('categories.' . $post->category->name) }}
+
                     </a>
                 </div>
 
