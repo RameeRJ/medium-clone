@@ -10,7 +10,7 @@
 
             <li class="me-2" role="presentation">
                 <a href="{{ route('post.categories') }}"
-                    class="{{ request()->routeIs('post.categories*') || request()->routeIs('post.category*') ? 'inline-block p-4 border-b border-gray-600 rounded-t-lg' : 'inline-block p-4 border-b text-gray-500 hover:text-black rounded-t-lg' }}">Categories</a>
+                    class="{{ request()->routeIs('post.categories*') || request()->routeIs('post.category*') ? 'inline-block p-4 border-b border-gray-600 rounded-t-lg' : 'inline-block p-4 border-b text-gray-500 hover:text-black rounded-t-lg' }}">Discover</a>
             </li>
         </ul>
     </div>
