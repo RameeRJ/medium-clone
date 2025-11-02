@@ -19,7 +19,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/follow/{user:id}', [FollowController::class, 'followUnfollow'])->name('follow');
     Route::post('/clap/{post:id}', [ClapController::class, 'clap'])->name('clap');
     Route::post('/posts/{post:id}/comments', [CommentController::class, 'store']);
-    Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
 
 });
 
@@ -34,5 +33,6 @@ Route::get('/@{user}/{post}', [PostController::class, 'show'])->name('post.show'
 Route::get('/@{user}', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/categories', [PostController::class, 'categories'])->name('post.categories');
 Route::get('/categories/{category:name}', [PostController::class, 'category'])->name('post.category');
+Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
 
 require __DIR__.'/auth.php';
