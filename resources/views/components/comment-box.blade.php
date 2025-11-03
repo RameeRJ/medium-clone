@@ -54,7 +54,8 @@
 
         <div class="mt-4 border border-gray-300 rounded-lg bg-white">
             <div class="p-3 bg-gray-50 rounded-lg">
-                <textarea x-model="commentText" @keydown.ctrl.enter="submitComment()" placeholder={{ __('message.thoughts_placeholder') }}
+                <textarea x-model="commentText" @keydown.ctrl.enter="submitComment()"
+                    placeholder="{{ __('message.thoughts_placeholder') }}"
                     class="w-full border-none focus:ring-0 resize-none text-gray-700 placeholder-gray-500 bg-white rounded-md p-3 shadow-sm"
                     rows="3"></textarea>
                 <div class="mt-3 flex justify-end">
