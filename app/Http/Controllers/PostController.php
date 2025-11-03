@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
@@ -54,6 +54,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
+        $user = auth()->user();
 
         // if ($request->hasFile('image')) {
         //     $imagePath = $request->file('image')->store('posts', 'public');
@@ -68,7 +69,7 @@ class PostController extends Controller
 
         Cache::flush();
 
-        return redirect()->route('dashboard')->with('success', 'Post created successfully.');
+        return redirect()->route('profile.show', $user)->with('success', 'Post created successfully.');
     }
 
     /**
@@ -84,15 +85,26 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::select('id', 'name')->get();
+
+        return view('post.create', compact('post', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+        $user = auth()->user();
+
+        $post->update($data);
+
+        if ($request->hasFile('image')) {
+            $post->clearMediaCollection();
+            $post->addMediaFromRequest('image')->toMediaCollection();
+        }
+
+        Cache::flush();
+
+        return redirect()->route('profile.show', $user)->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -100,16 +112,19 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        $user = auth()->user();
+
+        return redirect()->route('profile.show', $user)->with('success', 'Post deleted successfully.');
     }
 
     public function categories()
     {
         $categories = Category::all();
-        $posts = Post::with(['user','media'])
-        ->withCount(['claps','comments'])
-        ->latest()
-        ->paginate(5);
+        $posts = Post::with(['user', 'media'])
+            ->withCount(['claps', 'comments'])
+            ->latest()
+            ->paginate(5);
 
         return view('post.category', compact('categories', 'posts'));
     }

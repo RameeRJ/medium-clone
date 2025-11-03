@@ -16,6 +16,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
+    Route::get('/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::put('/{post}/update', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/{post}/delete', [PostController::class, 'destroy'])->name('post.delete');
     Route::post('/follow/{user:id}', [FollowController::class, 'followUnfollow'])->name('follow');
     Route::post('/clap/{post:id}', [ClapController::class, 'clap'])->name('clap');
     Route::post('/posts/{post:id}/comments', [CommentController::class, 'store']);

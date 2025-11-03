@@ -64,7 +64,15 @@ class Post extends Model implements HasMedia
 
     public function imageUrl($conversionName = '')
     {
-        return $this->getFirstMedia()?->getUrl($conversionName);
+        $media = $this->getFirstMedia();
+        if (! $media) {
+            return 'https://www.aputf.org/wp-content/uploads/2015/06/default-placeholder.png';
+        }
+        if ($media->hasGeneratedConversion($conversionName)) {
+            return $media->getUrl($conversionName);
+        }
+
+        return $media->getUrl();
     }
 
     public function readTime($wordsPerMinute = 100): int
@@ -81,6 +89,10 @@ class Post extends Model implements HasMedia
         static::creating(function ($post) {
             $post->slug = Str::slug($post->title);
             $post->user_id = auth()->id();
+        });
+
+        static::deleting(function ($post) {
+            $post->clearMediaCollection();
         });
     }
 }

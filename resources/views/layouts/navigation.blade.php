@@ -61,6 +61,10 @@
                                     {{ __('message.profile') }}
                                 </x-dropdown-link>
 
+                                <x-dropdown-link :href="route('profile.show', $user = auth()->user())">
+                                    {{ __('message.mypost') }}
+                                </x-dropdown-link>
+
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

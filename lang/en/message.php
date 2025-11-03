@@ -13,5 +13,6 @@ return [
     'respond' => 'Respond',
     'posting' => 'Posting...',
     'log_out' => 'Log out',
+    'mypost' => 'My posts'
 
 ];
