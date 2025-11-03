@@ -140,7 +140,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         $media = $this->getFirstMedia('avatar');
 
         if ($media) {
-            return $media->getUrl($conversionName);
+            return $media->hasGeneratedConversion('avatar')
+                ? $media->getUrl('avatar')
+                : $media->getUrl();
         }
 
         return 'https://api.dicebear.com/8.x/micah/svg?seed='.urlencode($this->id);
