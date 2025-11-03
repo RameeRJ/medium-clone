@@ -99,7 +99,7 @@
                 </a> --}}
             </div>
             <a href="{{ route('post.show', ['user' => $post->user, 'post' => $post]) }}">
-                <img class="w-48 h-full max-h-[16rem] object-cover rounded-r-lg" src="{{ $post->imageUrl() }}"
+                <img class="w-48 h-full max-h-[16rem] object-cover rounded-r-lg" src="{{ $post->imageUrl('preview') }}"
                     alt="">
 
             </a>

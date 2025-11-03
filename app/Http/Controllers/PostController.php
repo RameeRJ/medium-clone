@@ -49,12 +49,16 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('posts', 'public');
-            $data['image'] = $imagePath;
-        }
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('posts', 'public');
+        //     $data['image'] = $imagePath;
+        // }
 
-        Post::Create($data);
+        $post = Post::Create($data);
+
+        if ($request->hasFile('image')) {
+        $post->addMediaFromRequest('image')->toMediaCollection();
+    }
 
         Cache::flush();
 

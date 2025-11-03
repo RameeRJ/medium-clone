@@ -37,7 +37,7 @@
                 {{-- Content section --}}
                 <div>
                     <div class="mt-8">
-                        <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}"
+                        <img src="{{ $post->imageUrl('large') }}" alt="{{ $post->title }}"
                             class="w-full h-full h-max-68 object-cover mb-8 rounded-lg">
                         <div class="mt-4">
                             {{ $post->content }}

@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory , InteractsWithMedia;
 
     protected $fillable = [
-        'image',
+        // 'image',
         'title',
         'slug',
         'content',
@@ -20,6 +22,16 @@ class Post extends Model
         'user_id',
         'published_at',
     ];
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->width(400);
+        $this
+            ->addMediaConversion('large')
+            ->width(1200);
+    }
 
     // Relations
     public function user()
@@ -50,23 +62,9 @@ class Post extends Model
         return 'slug';
     }
 
-    public function imageUrl(): string
+    public function imageUrl($conversionName = '')
     {
-        // 1. Check if the image property is already a full URL
-        //    (e.g., from picsum, dicebear, or robohash)
-        if (Str::startsWith($this->image, 'http')) {
-            return $this->image;
-        }
-
-        // 2. If the image is empty or null, return a default avatar
-        if (empty($this->image)) {
-            // You can use any default you want here
-            return 'https://api.dicebear.com/8.x/adventurer/svg?seed='.$this->id;
-        }
-
-        // 3. If it's not a full URL and not empty,
-        //    it must be a local file. Get the URL from Storage.
-        return Storage::url($this->image);
+        return $this->getFirstMedia()?->getUrl($conversionName);
     }
 
     public function readTime($wordsPerMinute = 100): int

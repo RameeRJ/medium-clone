@@ -6,9 +6,10 @@ return [
     'Travel' => 'Travel',
     'Education' => 'Education',
     'Lifestyle' => 'Lifestyle',
-    'Movie' => 'Movie',
+    'Movies' => 'Movie',
     'Games' => 'Games',
     'Sports' => 'Sports',
     'Politics' => 'Politics',
     'Food' => 'Food',
+    'Fashion' => 'Fashion'
 ];

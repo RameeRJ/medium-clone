@@ -6,12 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, InteractsWithMedia ,Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,6 +53,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     protected $appends = ['avatar_url']; // Make it always available in JSON
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('avatar')
+            ->width(128)
+            ->crop(128, 128);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile();
+    }
 
     // Relations
 
@@ -119,10 +135,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->imageUrl();
     }
 
-    public function imageUrl(): string
+    public function imageUrl($conversionName = '')
     {
-        return $this->image
-            ? Storage::url($this->image)
-            : 'https://api.dicebear.com/8.x/micah/svg?seed='.urlencode($this->id);
+        $media = $this->getFirstMedia('avatar');
+
+        if ($media) {
+            return $media->getUrl($conversionName);
+        }
+
+        return 'https://api.dicebear.com/8.x/micah/svg?seed='.urlencode($this->id);
     }
 }

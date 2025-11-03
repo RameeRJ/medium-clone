@@ -17,11 +17,10 @@
         @csrf
         @method('patch')
 
-        @if ($user->image)
+        @if ($user->getFirstMedia())
             <div>
-                <img src="{{ $user->imageUrl() }}" alt="{{ $user->name }}" class="w-20 h-20 rounded-full">
+                <img src="{{ $user->imageUrl('avatar') }}" alt="{{ $user->name }}" class="w-20 h-20 rounded-full">
             </div>
-
         @endif
 
         <div>
@@ -40,13 +39,15 @@
 
         <div>
             <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)" required autofocus autocomplete="username" />
+            <x-text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)"
+                required autofocus autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="email" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)"
+                required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
