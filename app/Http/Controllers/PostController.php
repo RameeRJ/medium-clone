@@ -19,14 +19,20 @@ class PostController extends Controller
         $page = request('page', 1);
         $user = auth()->user();
 
-        $posts = Cache::remember('posts.'.($user->id ?? 'guest').".page.{$page}", now()->addMinutes(10), function () use ($user) {
-            return Post::when($user, function ($query) use ($user) {
-                // If logged in: filter posts from followed users
+        $cacheKey = 'posts.'.($user->id ?? 'guest').".page.{$page}";
+
+        $posts = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($user) {
+            $query = Post::query()
+                ->with(['user', 'media'])
+                ->withCount(['claps', 'comments'])
+                ->latest();
+
+            if ($user) {
                 $followingIds = $user->following()->pluck('users.id');
                 $query->whereIn('user_id', $followingIds);
-            })
-                ->latest()
-                ->paginate(5);
+            }
+
+            return $query->paginate(5);
         });
 
         return view('post.index', compact('posts'));
@@ -57,8 +63,8 @@ class PostController extends Controller
         $post = Post::Create($data);
 
         if ($request->hasFile('image')) {
-        $post->addMediaFromRequest('image')->toMediaCollection();
-    }
+            $post->addMediaFromRequest('image')->toMediaCollection();
+        }
 
         Cache::flush();
 
@@ -100,7 +106,10 @@ class PostController extends Controller
     public function categories()
     {
         $categories = Category::all();
-        $posts = Post::latest()->paginate(5);
+        $posts = Post::with(['user','media'])
+        ->withCount(['claps','comments'])
+        ->latest()
+        ->paginate(5);
 
         return view('post.category', compact('categories', 'posts'));
     }
