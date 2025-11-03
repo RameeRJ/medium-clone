@@ -13,14 +13,14 @@
             </div>
 
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1">
 
-                <x-language-dropdown />
+
 
 
                 <a href="{{ route('post.create') }}" class="flex items-center">
                     <button
-                        class="flex items-center justify-center gap-2 px-4 py-2 text-gray-500 hover:text-black font-medium transition duration-150 ease-in-out">
+                        class="flex items-center justify-center gap-2  py-2 text-gray-500 hover:text-black font-medium transition duration-150 ease-in-out">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -29,13 +29,17 @@
                         <span class="text-sm">{{ __('message.write') }}</span>
                     </button>
                 </a>
+
+                <x-language-dropdown />
+
+
                 @auth
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <div>
                                         <x-avatar :user="Auth::user()" size="w-8 h-8"
                                             class="h-8 w-8 rounded-full object-cover" />
