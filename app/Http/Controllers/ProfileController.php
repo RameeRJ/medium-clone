@@ -14,7 +14,9 @@ class ProfileController extends Controller
 {
     public function show(User $user): View
     {
-        $posts = $user->posts()->latest()->paginate(5);
+        $posts = $user->posts()->with(['user', 'media'])
+            ->withCount(['claps', 'comments'])
+            ->latest()->paginate(5);
         $following = $user->following()->take(10)->get();
 
         return view('profile.show', [
