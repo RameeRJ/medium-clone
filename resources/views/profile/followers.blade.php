@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-6 sm:p-8 bg-white shadow-sm rounded-2xl">
+            <div class="p-6 sm:p-8 bg-white shadow-sm rounded-2xl ">
 
                 {{-- Breadcrumb --}}
                 <nav class="flex items-center text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
@@ -31,9 +31,9 @@
                 </nav>
 
                 {{-- Title --}}
-                <div class="flex items-center justify-between mb-6">
-                    <h1 class="text-2xl font-semibold text-gray-800">
-                        Followers ({{ $user->followers->count() }})
+                <div class="flex items-center justify-between mb-10">
+                    <h1 class="text-3xl font-semibold text-gray-800">
+                        {{ $user->followers->count() }} Followers
                     </h1>
                 </div>
 
