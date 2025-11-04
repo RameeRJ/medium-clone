@@ -19,48 +19,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = [
-            'Movies',
-            'Games',
-            'Sports',
-            'Politics',
-            'Food',
-            'Technology',
-            'Travel',
-            'Health',
-            'Fashion',
-            'Education',
-        ];
+        // $categories = [
+        //     'Movies',
+        //     'Games',
+        //     'Sports',
+        //     'Politics',
+        //     'Food',
+        //     'Technology',
+        //     'Travel',
+        //     'Health',
+        //     'Fashion',
+        //     'Education',
+        // ];
 
-        foreach ($categories as $categoryName) {
-            Category::create(['name' => $categoryName]);
-        }
+        // foreach ($categories as $categoryName) {
+        //     Category::create(['name' => $categoryName]);
+        // }
 
-        User::factory()->create([
-            'name' => 'test',
-            'email' => 'test@gmail.com',
-            'username' => 'test',
-            'bio' => 'Administrator | Developer | Photographer',
-            'password' => Hash::make('1111'),
-        ]);
-        User::factory()->create([
-            'name' => 'mary',
-            'email' => 'mary@gmail.com',
-            'username' => 'mary',
-            'bio' => 'Administrator | Freelancer | Blogger',
-            'password' => Hash::make('1111'),
-        ]);
-        User::factory()->create([
-            'name' => 'zura',
-            'email' => 'zura@gmail.com',
-            'username' => 'zura',
-            'bio' => 'Writer s | Filmmaker | Blogger',
-            'password' => Hash::make('1111'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'test',
+        //     'email' => 'test@gmail.com',
+        //     'username' => 'test',
+        //     'bio' => 'Administrator | Developer | Photographer',
+        //     'password' => Hash::make('1111'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'mary',
+        //     'email' => 'mary@gmail.com',
+        //     'username' => 'mary',
+        //     'bio' => 'Administrator | Freelancer | Blogger',
+        //     'password' => Hash::make('1111'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'zura',
+        //     'email' => 'zura@gmail.com',
+        //     'username' => 'zura',
+        //     'bio' => 'Writer s | Filmmaker | Blogger',
+        //     'password' => Hash::make('1111'),
+        // ]);
 
-        Post::factory(50)->create();
+        // Post::factory(50)->create();
 
-        // $users = User::factory(10)->create();
+        $users = User::factory(10)->create();
 
         // // // Get users 1, 2, 3 (assuming they already exist)
         // $mainUsers = User::whereIn('id', [1, 2, 3])->get();

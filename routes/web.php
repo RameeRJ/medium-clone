@@ -37,5 +37,6 @@ Route::get('/@{user}', [ProfileController::class, 'show'])->name('profile.show')
 Route::get('/categories', [PostController::class, 'categories'])->name('post.categories');
 Route::get('/categories/{category:name}', [PostController::class, 'category'])->name('post.category');
 Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
+Route::get('/{user}/followers', [ProfileController::class, 'followers'])->name('profile.followers');
 
 require __DIR__.'/auth.php';

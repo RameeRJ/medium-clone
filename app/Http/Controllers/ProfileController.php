@@ -81,4 +81,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function followers(User $user)
+    {
+        $followers = $user->followers()->get();
+
+        return view('profile.followers', ['user' => $user, 'followers' => $followers]);
+    }
 }

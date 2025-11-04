@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
@@ -46,7 +47,8 @@
                                         <h2 class="text-xl mb-8">{{ $user->bio }}</h2>
                                     @endif
                                     <div class="flex text-green-600 gap-2 mb-8">
-                                        <a href="#" class="hover:text-green-700">{{ $user->followers()->count() }}
+                                        <a href="{{ route('profile.followers', $user) }}"
+                                            class="hover:text-green-700">{{ $user->followers()->count() }}
                                             Followers</a>
                                         <span class="text-xl font-bold">&middot;</span>
                                         <a href="#" class="hover:text-green-700">{{ $user->following()->count() }}
@@ -78,8 +80,8 @@
                         <x-avatar :user="$user" size="w-24 h-24" />
                         <div class="mt-4">
                             <h3 class="text-xl font-semibold">{{ $user->name }}</h3>
-                            <a href="#" class="block py-1 text-gray-500 hover:text-gray-700 "><span
-                                    x-text="followersCount">
+                            <a href="{{ route('profile.followers', $user) }}"
+                                class="block py-1 text-gray-500 hover:text-gray-700 "><span x-text="followersCount">
 
                                 </span>
                                 followers</a>
